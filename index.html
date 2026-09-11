@@ -1,0 +1,948 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sentence Up v14 · Pattern Library</title>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--text:#18212f;--muted:#7b8794;--line:#e8edf3;--accent:#3f7cff;--accent2:#eaf1ff;--good:#279568;--bad:#b45b61;--practice:#7058d6;--practice2:#f1edff;--shadow:0 10px 30px rgba(23,33,51,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(430px,100%);min-height:100vh;margin:0 auto;background:linear-gradient(180deg,#fafcff,#f5f7fb);position:relative}
+.screen{display:none;min-height:100vh;padding:18px 18px 96px}
+.screen.active{display:block}
+.topbar,.head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.topbar{margin-bottom:12px} .head{justify-content:flex-start;margin-bottom:12px}
+.brand{font-size:20px;font-weight:900;letter-spacing:-.4px}
+.pill{font-size:12px;background:#fff;border:1px solid var(--line);padding:8px 10px;border-radius:999px;color:var(--muted)}
+.icon-btn,.back{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px}
+.hero{background:linear-gradient(135deg,#3f7cff,#6d8eff);color:#fff;border-radius:22px;padding:19px 20px;box-shadow:var(--shadow);margin-bottom:14px}
+.hero h1{font-size:24px;line-height:1.22;margin:0 0 6px} .hero p{font-size:14px;line-height:1.45;margin:0;opacity:.92}
+.section-title{font-size:14px;font-weight:850;margin:15px 2px 9px}
+.card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;box-shadow:0 6px 20px rgba(23,33,51,.05);margin-bottom:11px}
+.pattern-card{border-top:3px solid rgba(63,124,255,.22)}
+.pattern-name{font-size:22px;line-height:1.35;font-weight:900;color:#235ac7;letter-spacing:-.25px;margin:6px 0}
+.pattern-meaning{font-size:14px;color:#5c6775;line-height:1.5}
+.meta-row{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px}
+.meta-chip{font-size:12px;font-weight:800;color:var(--accent);background:var(--accent2);border-radius:999px;padding:7px 10px}
+.primary,.secondary{width:100%;border-radius:16px;padding:15px 16px;font-weight:850}
+.primary{border:none;background:var(--accent);color:#fff;box-shadow:0 8px 18px rgba(63,124,255,.22)}
+.secondary{border:1px solid var(--line);background:#fff;color:var(--text)}
+.primary:disabled,.secondary:disabled{cursor:default}
+.review-card{border-top:3px solid rgba(112,88,214,.17)}
+.review-count{font-size:27px;font-weight:900;margin:4px 0}
+.test-btn{margin-top:10px;border:1px dashed #c9d4e8;background:#fafcff;color:#516078;box-shadow:none}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.stat{text-align:center;padding:12px 6px} .stat strong{display:block;font-size:21px} .stat span{font-size:12px;color:var(--muted)}
+.step-title{font-weight:900} .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.mini-progress{height:7px;background:#e8edf5;border-radius:999px;overflow:hidden;margin:10px 0 20px}
+.mini-progress>span{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .2s ease}
+.stage{font-size:12px;font-weight:900;color:var(--accent);background:var(--accent2);display:inline-block;border-radius:999px;padding:7px 10px;margin-bottom:12px}
+.sentence{font-size:28px;line-height:1.38;font-weight:880;letter-spacing:-.45px;margin:10px 0 16px}
+.pattern-highlight{color:var(--accent);font-weight:950}
+.meaning{font-size:17px;line-height:1.6;color:#475667;margin-bottom:17px}
+.audio-btn{display:inline-flex;align-items:center;gap:7px;border:none;background:var(--accent2);color:var(--accent);padding:11px 14px;border-radius:14px;font-weight:850}
+.pattern-box{margin-top:18px;padding:14px 15px;border:1px solid #dfe8ff;background:#fafcff;border-radius:16px}
+.pattern-box small{display:block;font-size:11px;color:var(--muted);margin-bottom:5px} .pattern-box strong{font-size:17px;color:#2f5fbf}
+.learn-note{font-size:12px;color:var(--muted);line-height:1.5;text-align:center;margin-top:9px}
+.typing-prompt{font-size:19px;line-height:1.55;font-weight:850;margin:6px 0 18px}
+.frame{font-size:20px;line-height:1.55;font-weight:800;padding:15px;border:1px solid var(--line);background:#fbfcfe;border-radius:16px;margin-bottom:12px}
+.pattern-input{width:100%;border:1.5px solid #d9e1ec;border-radius:14px;padding:14px;font-size:17px;outline:none;margin:10px 0 9px}
+.pattern-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(63,124,255,.1)}
+.feedback{min-height:20px;font-size:13px;font-weight:750;margin:4px 2px 10px} .feedback.good{color:var(--good)} .feedback.bad{color:var(--bad)}
+.inline-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.flip-card{width:100%;min-height:190px;perspective:1000px;margin:8px 0 14px}
+.flip-inner{position:relative;width:100%;min-height:190px;transition:transform .36s ease;transform-style:preserve-3d}
+.flip-card.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;min-height:190px;border-radius:18px;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:22px 18px}
+.flip-front{background:#fff} .flip-back{transform:rotateY(180deg);background:#f3f7ff;border-color:#dce6ff}
+.cue{font-size:15px;color:var(--accent);font-weight:900;background:var(--accent2);border-radius:999px;padding:7px 10px;margin-bottom:14px}
+.recall-ko{font-size:21px;line-height:1.55;font-weight:900}
+.answer-en{font-size:21px;line-height:1.5;font-weight:900}
+.rating{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.rating button{border:1px solid var(--line);background:#fff;border-radius:15px;padding:14px 7px;font-weight:900}
+.rating .retry{color:var(--bad)} .rating .success{color:var(--good)}
+.hidden{display:none!important}
+.retry-banner{font-size:12px;color:var(--practice);font-weight:900;background:var(--practice2);display:inline-block;border-radius:999px;padding:7px 10px;margin-bottom:12px}
+.complete-card{text-align:center;padding:30px 20px} .check{font-size:48px;margin-bottom:8px} .complete-card h2{margin:0 0 8px} .complete-card p{color:var(--muted);line-height:1.55}
+.review-screen .mini-progress>span{background:var(--practice)} .review-screen .stage{background:var(--practice2);color:var(--practice)}
+.review-screen .flip-back{background:#f6f2ff;border-color:#e3d9ff} .review-screen .answer-en{color:#4e3a95}
+.settings-card label{display:block;font-size:12px;font-weight:850;color:#5d6875;margin:18px 0 7px}
+.voice-select{width:100%;border:1px solid #dfe5ee;background:#fff;border-radius:14px;padding:13px 12px;font-size:15px;font-weight:700}
+.voice-meta{font-size:12px;color:var(--muted);margin-top:9px;min-height:18px}
+.bottom-space{height:8px}
+
+.pattern-parts{margin-top:14px;padding-top:12px;border-top:1px solid #e8edf5;display:grid;gap:9px}
+.part-row{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
+.part-label{font-size:11px;font-weight:900;border-radius:999px;padding:5px 8px;white-space:nowrap}
+.fixed-label{background:var(--accent2);color:var(--accent)}
+.change-label{background:#f2f4f7;color:#697586}
+.fixed-part{font-size:14px;line-height:1.5;font-weight:900;color:var(--accent)}
+.change-part{font-size:14px;line-height:1.5;color:#4f5d6d;font-weight:750}
+.typing-sentence-shell{font-size:19px;line-height:1.75;font-weight:800;padding:16px;border:1px solid var(--line);background:#fbfcfe;border-radius:16px;margin-bottom:12px}
+.typing-slot{display:inline-block;margin:2px 5px;padding:5px 9px;border:1.5px dashed #8fb0ff;border-radius:9px;background:var(--accent2);color:var(--accent);font-size:12px;font-weight:900;vertical-align:middle}
+
+
+/* v14 bottom navigation + pattern library */
+.screen.with-bottom-nav{padding-bottom:108px}
+.bottom-nav{
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+  width:min(430px,100%);height:74px;padding:8px 14px max(8px,env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.96);backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:8px;z-index:50
+}
+.nav-btn{border:none;background:transparent;border-radius:14px;color:#85909e;font-size:12px;font-weight:850;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+.nav-btn .nav-icon{font-size:20px;line-height:1}
+.nav-btn.active{background:var(--accent2);color:var(--accent)}
+.library-toolbar{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none}
+.library-toolbar::-webkit-scrollbar{display:none}
+.filter-chip{border:1px solid var(--line);background:#fff;color:#697586;padding:8px 12px;border-radius:999px;font-size:12px;font-weight:850;white-space:nowrap}
+.filter-chip.active{border-color:#bcd0ff;background:var(--accent2);color:var(--accent)}
+.library-search{width:100%;border:1px solid var(--line);background:#fff;border-radius:15px;padding:13px 14px;font-size:15px;outline:none;margin:2px 0 12px}
+.library-search:focus{border-color:#aac3ff;box-shadow:0 0 0 3px rgba(63,124,255,.08)}
+.library-list{display:grid;gap:10px}
+.library-item{background:#fff;border:1px solid var(--line);border-radius:17px;padding:15px 16px;box-shadow:0 4px 14px rgba(23,33,51,.035);cursor:pointer}
+.library-item:active{transform:scale(.995)}
+.library-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.library-num{font-size:11px;font-weight:900;color:#9aa4b2;margin-bottom:5px}
+.library-pattern{font-size:17px;line-height:1.4;font-weight:900;color:#263548}
+.library-meaning{font-size:13px;line-height:1.5;color:#6e7987;margin-top:6px}
+.status-badge{font-size:10px;font-weight:900;padding:6px 8px;border-radius:999px;white-space:nowrap}
+.status-done{background:#e9f7f0;color:#25855e}
+.status-today{background:var(--accent2);color:var(--accent)}
+.status-next{background:#f2f4f7;color:#7b8794}
+.library-empty{text-align:center;color:var(--muted);font-size:14px;padding:40px 10px}
+.detail-hero{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px;margin-bottom:12px}
+.detail-pattern{font-size:24px;line-height:1.4;font-weight:950;color:#235ac7;margin:8px 0}
+.detail-meaning{font-size:14px;line-height:1.55;color:#5c6775}
+.example-list{display:grid;gap:9px}
+.example-item{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 15px}
+.example-en{font-size:16px;line-height:1.55;font-weight:800}
+.example-ko{font-size:13px;line-height:1.55;color:#6d7886;margin-top:5px}
+.detail-meta{display:grid;gap:8px;margin-top:15px}
+.detail-row{display:grid;grid-template-columns:86px 1fr;gap:9px;align-items:start}
+.detail-label{font-size:11px;font-weight:900;color:#7b8794;padding-top:2px}
+.detail-value{font-size:14px;line-height:1.5;font-weight:800}
+.library-summary{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 10px}
+.library-summary strong{font-size:16px}
+.library-summary span{font-size:12px;color:var(--muted)}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <section id="home" class="screen active with-bottom-nav">
+    <div class="topbar">
+      <div class="brand">Sentence Up</div>
+      <div id="dayLabel" class="pill"></div>
+    </div>
+
+    <div class="hero">
+      <h1>하루 한 패턴,<br>다섯 문장으로 익혀요.</h1>
+      <p>처음엔 충분히 보고, 뒤로 갈수록 힌트를 줄여서 직접 꺼내는 연습.</p>
+    </div>
+
+    <div class="section-title">오늘의 패턴</div>
+    <div id="todayPatternCard" class="card pattern-card">
+      <div id="patternStatus" class="meta-chip">오늘 학습</div>
+      <div id="homePatternName" class="pattern-name"></div>
+      <div id="homePatternMeaning" class="pattern-meaning"></div>
+      <div class="meta-row">
+        <span id="focusProgressText" style="font-size:13px;color:var(--muted)">5문장 집중 학습</span>
+        <span id="focusMiniStatus" style="font-size:13px;font-weight:850"></span>
+      </div>
+      <button id="startFocusBtn" class="primary" onclick="startFocusLearning()" style="margin-top:15px">오늘 학습 시작</button>
+    </div>
+
+    <div class="section-title">복습</div>
+    <div class="card review-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div>
+          <div style="font-size:17px;font-weight:900">이전 패턴 섞어 복습</div>
+          <div id="reviewDueCount" class="review-count">0</div>
+          <div style="font-size:13px;color:var(--muted)">오늘 복습할 문장</div>
+        </div>
+        <div class="meta-chip" style="background:var(--practice2);color:var(--practice)">혼합 복습</div>
+      </div>
+      <button id="startReviewBtn" class="primary" onclick="startReview()" style="margin-top:15px;background:var(--practice)">복습 시작</button>
+      <button class="secondary test-btn" onclick="advanceTestDay()">프로토타입: 다음날로 이동 +1일</button>
+    </div>
+
+    <div class="section-title">학습 현황</div>
+    <div class="stats">
+      <div class="card stat"><strong id="patternsStat">0</strong><span>완료 패턴</span></div>
+      <div class="card stat"><strong id="sentencesStat">0</strong><span>학습 문장</span></div>
+      <div class="card stat"><strong id="reviewsStat">0</strong><span>복습 완료</span></div>
+    </div>
+  </section>
+
+  <section id="learn" class="screen">
+    <div class="head">
+      <button class="back" onclick="goHome()">←</button>
+      <div style="flex:1">
+        <div id="learnHeadTitle" class="step-title">오늘의 패턴</div>
+        <div id="learnHeadSub" class="sub"></div>
+      </div>
+    </div>
+    <div class="mini-progress"><span id="learnProgress"></span></div>
+
+    <div id="studyTask" class="card">
+      <div class="stage">1/5 · 먼저 익히기</div>
+      <div id="studySentence" class="sentence"></div>
+      <div id="studyKo" class="meaning"></div>
+      <button class="audio-btn" onclick="speakFocusExample(0)">🔊 문장 듣기</button>
+      <div class="pattern-box">
+        <small>오늘의 패턴</small>
+        <strong id="studyPattern"></strong>
+        <div class="pattern-parts">
+          <div class="part-row"><span class="part-label fixed-label">고정 부분</span><span id="studyFixedPart" class="fixed-part"></span></div>
+          <div class="part-row"><span class="part-label change-label">바꿔 쓰는 부분</span><span id="studyChangePart" class="change-part"></span></div>
+        </div>
+      </div>
+      <button class="primary" onclick="finishCurrentTask(true)" style="margin-top:16px">다음</button>
+    </div>
+
+    <div id="typingTask" class="card hidden">
+      <div id="typingStage" class="stage">2/5 · 패턴 직접 쓰기</div>
+      <div class="learn-note" style="text-align:left;margin:0 0 10px"><strong>고정 부분만 입력하세요.</strong> 바꿔 쓰는 부분은 이미 문장에 보여드려요.</div>
+      <div id="typingKo" class="typing-prompt"></div>
+      <div class="typing-sentence-shell">
+        <span id="typingBefore"></span>
+        <span class="typing-slot">여기에 고정 부분 입력 ↓</span>
+        <span id="typingAfter"></span>
+      </div>
+      <input id="patternInput" class="pattern-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="고정 부분만 입력">
+      <div id="typingFeedback" class="feedback"></div>
+      <button id="typingCheckBtn" class="primary" onclick="checkPatternTyping()">확인</button>
+      <button id="typingRevealBtn" class="secondary hidden" onclick="revealPatternTyping()" style="margin-top:9px">정답 보기</button>
+      <button id="typingNextBtn" class="primary hidden" onclick="finishTypingTask()" style="margin-top:9px">다음</button>
+    </div>
+
+    <div id="recallTask" class="card hidden">
+      <div id="recallStage" class="stage"></div>
+      <div id="retryBanner" class="retry-banner hidden">↻ 빠른 재연습</div>
+      <div class="flip-card" id="focusFlipCard">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div id="focusCue" class="cue hidden"></div>
+            <div id="focusKo" class="recall-ko"></div>
+          </div>
+          <div class="flip-face flip-back">
+            <div id="focusAnswer" class="answer-en"></div>
+          </div>
+        </div>
+      </div>
+      <button id="focusAnswerBtn" class="secondary" onclick="toggleFocusAnswer()">정답 보기</button>
+      <div id="focusRating" class="rating hidden">
+        <button class="retry" onclick="rateFocus(false)">↻ 다시 연습</button>
+        <button class="success" onclick="rateFocus(true)">✓ 성공</button>
+      </div>
+    </div>
+    <div class="learn-note">처음보다 뒤로 갈수록 힌트가 줄어들어요.</div>
+  </section>
+
+  <section id="complete" class="screen">
+    <div class="head"><button class="back" onclick="goHome()">←</button><div class="step-title">오늘 학습 완료</div></div>
+    <div class="card complete-card">
+      <div class="check">✓</div>
+      <h2>오늘의 패턴을 끝냈어요.</h2>
+      <div id="completePattern" class="pattern-name"></div>
+      <p>같은 패턴을 다섯 문장에서 반복했고, 어려웠던 문장은 바로 다시 꺼내봤어요.</p>
+      <button class="primary" onclick="goHome()">홈으로</button>
+    </div>
+  </section>
+
+  <section id="review" class="screen review-screen">
+    <div class="head">
+      <button class="back" onclick="goHome()">←</button>
+      <div style="flex:1">
+        <div class="step-title">오늘 복습</div>
+        <div id="reviewHeadSub" class="sub"></div>
+      </div>
+    </div>
+    <div class="mini-progress"><span id="reviewProgress"></span></div>
+    <div class="card">
+      <div class="stage">REVIEW · 이전 패턴 혼합</div>
+      <div id="reviewPatternHint" class="learn-note" style="text-align:left;margin:0 0 10px"></div>
+      <div class="flip-card" id="reviewFlipCard">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><div id="reviewKo" class="recall-ko"></div></div>
+          <div class="flip-face flip-back"><div id="reviewAnswer" class="answer-en"></div></div>
+        </div>
+      </div>
+      <button id="reviewAnswerBtn" class="secondary" onclick="toggleReviewAnswer()">정답 보기</button>
+      <div id="reviewRating" class="rating hidden">
+        <button class="retry" onclick="rateReview(false)">↻ 다시 연습</button>
+        <button class="success" onclick="rateReview(true)">✓ 성공</button>
+      </div>
+    </div>
+    <div class="learn-note">오늘 배우는 새 패턴은 복습에 섞지 않아요.</div>
+  </section>
+
+
+  <section id="library" class="screen with-bottom-nav">
+    <div class="topbar">
+      <div>
+        <div class="brand">패턴 도서관</div>
+        <div class="sub">배운 패턴도, 앞으로 배울 패턴도 자유롭게 볼 수 있어요.</div>
+      </div>
+      <div id="libraryCountPill" class="pill">50개</div>
+    </div>
+
+    <input id="librarySearch" class="library-search" type="search" placeholder="패턴이나 뜻 검색" oninput="renderLibrary()">
+
+    <div class="library-toolbar">
+      <button id="filterAll" class="filter-chip active" onclick="setLibraryFilter('all')">전체</button>
+      <button id="filterLearned" class="filter-chip" onclick="setLibraryFilter('learned')">학습 완료</button>
+      <button id="filterUpcoming" class="filter-chip" onclick="setLibraryFilter('upcoming')">앞으로 학습</button>
+    </div>
+
+    <div class="library-summary">
+      <strong id="librarySummaryTitle">전체 패턴</strong>
+      <span id="librarySummaryCount"></span>
+    </div>
+
+    <div id="libraryList" class="library-list"></div>
+  </section>
+
+  <section id="patternDetail" class="screen">
+    <div class="head">
+      <button class="back" onclick="backToLibrary()">←</button>
+      <div style="flex:1">
+        <div class="step-title">패턴 보기</div>
+        <div id="detailStatusText" class="sub"></div>
+      </div>
+    </div>
+
+    <div class="detail-hero">
+      <div id="detailStatusBadge" class="status-badge status-next" style="display:inline-block"></div>
+      <div id="detailPattern" class="detail-pattern"></div>
+      <div id="detailMeaning" class="detail-meaning"></div>
+      <div class="detail-meta">
+        <div class="detail-row">
+          <div class="detail-label">고정 부분</div>
+          <div id="detailChunk" class="detail-value" style="color:var(--accent)"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">바꿔 쓰는 부분</div>
+          <div id="detailVariable" class="detail-value"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">예문 5개</div>
+    <div id="detailExamples" class="example-list"></div>
+  </section>
+
+  <nav id="bottomNav" class="bottom-nav">
+    <button id="homeTabBtn" class="nav-btn active" onclick="openHomeTab()">
+      <span class="nav-icon">⌂</span><span>홈</span>
+    </button>
+    <button id="libraryTabBtn" class="nav-btn" onclick="openLibraryTab()">
+      <span class="nav-icon">▤</span><span>패턴 도서관</span>
+    </button>
+  </nav>
+</div>
+
+<script>
+const patterns=[{"pattern":"I was wondering if you could ~","chunk":"I was wondering if you could","meaning":"정중하게 부탁하거나 조심스럽게 요청할 때","cue":"I was …","guided":"I was wondering if you could ______","examples":[["I was wondering if you could help me with this.","혹시 이것 좀 도와주실 수 있을까요?"],["I was wondering if you could check this for me.","혹시 이것 좀 확인해 주실 수 있을까요?"],["I was wondering if you could come a little earlier.","혹시 조금 일찍 와주실 수 있을까요?"],["I was wondering if you could send me the details.","혹시 자세한 내용을 보내주실 수 있을까요?"],["I was wondering if you could show me how to do this.","혹시 이거 어떻게 하는지 보여주실 수 있을까요?"]]},{"pattern":"Do you happen to have ~?","chunk":"Do you happen to have","meaning":"상대방에게 조심스럽게 가지고 있는지 물을 때","cue":"Do you …","guided":"Do you happen to have ______?","examples":[["Do you happen to have a minute?","혹시 잠깐 시간 있으세요?"],["Do you happen to have a pen?","혹시 펜 있으세요?"],["Do you happen to have a charger?","혹시 충전기 있으세요?"],["Do you happen to have an extra apron?","혹시 여분의 앞치마 있으세요?"],["Do you happen to have a copy of the menu?","혹시 메뉴 사본 있으세요?"]]},{"pattern":"I'll take care of ~","chunk":"I'll take care of","meaning":"일이나 문제를 내가 맡아서 처리하겠다고 할 때","cue":"I'll take …","guided":"I'll take care of ______","examples":[["I'll take care of it right away.","제가 바로 처리할게요."],["I'll take care of the dishes.","제가 설거지는 처리할게요."],["I'll take care of the order.","제가 주문은 처리할게요."],["I'll take care of the guest.","제가 손님은 응대할게요."],["I'll take care of the rest.","제가 나머지는 처리할게요."]]},{"pattern":"Let me know if ~","chunk":"Let me know if","meaning":"어떤 조건이나 상황이 생기면 알려 달라고 할 때","cue":"Let me …","guided":"Let me know if ______","examples":[["Let me know if anything changes.","뭔가 바뀌면 알려주세요."],["Let me know if you need any help.","도움이 필요하면 알려주세요."],["Let me know if you have any questions.","질문이 있으면 알려주세요."],["Let me know if you're ready.","준비되면 알려주세요."],["Let me know if there's a problem.","문제가 생기면 알려주세요."]]},{"pattern":"I didn't mean to ~","chunk":"I didn't mean to","meaning":"그럴 의도는 아니었다고 부드럽게 설명할 때","cue":"I didn't …","guided":"I didn't mean to ______","examples":[["I didn't mean to make things difficult.","일을 어렵게 만들려던 건 아니었어요."],["I didn't mean to sound rude.","무례하게 말하려던 건 아니었어요."],["I didn't mean to interrupt you.","당신 말을 끊으려던 건 아니었어요."],["I didn't mean to ignore you.","당신을 무시하려던 건 아니었어요."],["I didn't mean to be so late.","그렇게 늦으려던 건 아니었어요."]]},{"pattern":"Would you mind ~ing?","chunk":"Would you mind","meaning":"상대방에게 정중하게 행동을 부탁할 때","cue":"Would you …","guided":"Would you mind ______?","examples":[["Would you mind checking this for me?","이것 좀 확인해 주실래요?"],["Would you mind waiting here for a moment?","여기서 잠깐 기다려 주실래요?"],["Would you mind closing the door?","문 좀 닫아 주실래요?"],["Would you mind moving over a little?","조금 옆으로 이동해 주실래요?"],["Would you mind saying that again?","다시 말씀해 주실래요?"]]},{"pattern":"I'm still getting used to ~","chunk":"I'm still getting used to","meaning":"새로운 환경이나 방식에 아직 적응 중이라고 할 때","cue":"I'm still …","guided":"I'm still getting used to ______","examples":[["I'm still getting used to how things work here.","아직 여기서 일이 돌아가는 방식에 적응하는 중이에요."],["I'm still getting used to the new schedule.","아직 새 일정에 적응하는 중이에요."],["I'm still getting used to the early shifts.","아직 이른 근무에 적응하는 중이에요."],["I'm still getting used to this kitchen.","아직 이 주방에 적응하는 중이에요."],["I'm still getting used to the new system.","아직 새 시스템에 적응하는 중이에요."]]},{"pattern":"I'll get back to you ~","chunk":"I'll get back to you","meaning":"확인한 뒤 다시 연락하거나 답하겠다고 할 때","cue":"I'll get …","guided":"I'll get back to you ______","examples":[["I'll get back to you after I check.","확인하고 다시 말씀드릴게요."],["I'll get back to you later today.","오늘 나중에 다시 연락드릴게요."],["I'll get back to you as soon as I know.","알게 되는 대로 바로 다시 말씀드릴게요."],["I'll get back to you by tomorrow.","내일까지 다시 연락드릴게요."],["I'll get back to you once I confirm the schedule.","일정을 확인한 뒤 다시 말씀드릴게요."]]},{"pattern":"~ works for me","chunk":"works for me","meaning":"시간이나 제안이 나에게 괜찮다고 할 때","cue":"… works …","guided":"______ works for me","examples":[["That works for me.","그거 저는 괜찮아요."],["Monday works for me.","월요일이면 저는 괜찮아요."],["Three o'clock works for me.","3시면 저는 괜찮아요."],["After lunch works for me.","점심 이후가 저는 괜찮아요."],["Next week works for me.","다음 주가 저는 괜찮아요."]]},{"pattern":"I'm not sure if ~","chunk":"I'm not sure if","meaning":"확신이 없을 때 부드럽게 말할 때","cue":"I'm not …","guided":"I'm not sure if ______","examples":[["I'm not sure if I understood correctly.","제가 제대로 이해했는지 잘 모르겠어요."],["I'm not sure if this is the right way.","이게 맞는 방법인지 잘 모르겠어요."],["I'm not sure if I have time today.","오늘 시간이 되는지 잘 모르겠어요."],["I'm not sure if this is enough.","이게 충분한지 잘 모르겠어요."],["I'm not sure if he's coming today.","그분이 오늘 오는지 잘 모르겠어요."]]},{"pattern":"Could you ~?","chunk":"Could you","meaning":"상대방에게 간단하고 정중하게 부탁할 때","cue":"Could …","guided":"Could you ______?","examples":[["Could you help me with this?","이것 좀 도와주실 수 있을까요?"],["Could you check the schedule?","일정 좀 확인해 주실 수 있을까요?"],["Could you open the door?","문 좀 열어주실 수 있을까요?"],["Could you send me the address?","주소 좀 보내주실 수 있을까요?"],["Could you wait a moment?","잠깐 기다려주실 수 있을까요?"]]},{"pattern":"Could you let me know ~?","chunk":"Could you let me know","meaning":"정보나 결과를 알려 달라고 정중하게 부탁할 때","cue":"Could you let …","guided":"Could you let me know ______?","examples":[["Could you let me know when you're free?","언제 시간 되는지 알려주실 수 있을까요?"],["Could you let me know what time it starts?","몇 시에 시작하는지 알려주실 수 있을까요?"],["Could you let me know if anything changes?","뭔가 바뀌면 알려주실 수 있을까요?"],["Could you let me know where we should meet?","어디서 만나야 하는지 알려주실 수 있을까요?"],["Could you let me know when it's ready?","준비되면 알려주실 수 있을까요?"]]},{"pattern":"Is it okay if I ~?","chunk":"Is it okay if I","meaning":"무언가 해도 되는지 허락을 구할 때","cue":"Is it okay …","guided":"Is it okay if I ______?","examples":[["Is it okay if I sit here?","제가 여기 앉아도 괜찮을까요?"],["Is it okay if I leave a little early?","제가 조금 일찍 가도 괜찮을까요?"],["Is it okay if I use this?","제가 이거 사용해도 괜찮을까요?"],["Is it okay if I call you later?","제가 나중에 전화해도 괜찮을까요?"],["Is it okay if I bring a friend?","제가 친구를 데려와도 괜찮을까요?"]]},{"pattern":"Do you mind if I ~?","chunk":"Do you mind if I","meaning":"상대방에게 폐가 되지 않는지 확인하며 허락을 구할 때","cue":"Do you mind …","guided":"Do you mind if I ______?","examples":[["Do you mind if I open the window?","제가 창문을 열어도 괜찮을까요?"],["Do you mind if I sit here?","제가 여기 앉아도 괜찮을까요?"],["Do you mind if I ask a question?","제가 질문 하나 해도 괜찮을까요?"],["Do you mind if I take a quick break?","제가 잠깐 쉬어도 괜찮을까요?"],["Do you mind if I use your phone?","제가 당신 휴대폰을 사용해도 괜찮을까요?"]]},{"pattern":"I was hoping to ~","chunk":"I was hoping to","meaning":"원하는 일이나 요청을 조금 더 부드럽게 말할 때","cue":"I was hoping …","guided":"I was hoping to ______","examples":[["I was hoping to talk to you for a minute.","잠깐 이야기할 수 있으면 했어요."],["I was hoping to change my appointment.","예약을 변경하고 싶었어요."],["I was hoping to ask you a question.","질문 하나 드리고 싶었어요."],["I was hoping to get some advice.","조언을 좀 받고 싶었어요."],["I was hoping to leave a little early today.","오늘 조금 일찍 가고 싶었어요."]]},{"pattern":"I'd like to ~","chunk":"I'd like to","meaning":"원하는 행동을 정중하고 자연스럽게 말할 때","cue":"I'd like …","guided":"I'd like to ______","examples":[["I'd like to make a reservation.","예약하고 싶어요."],["I'd like to ask a question.","질문 하나 하고 싶어요."],["I'd like to order this, please.","이걸 주문하고 싶어요."],["I'd like to change my schedule.","제 일정을 변경하고 싶어요."],["I'd like to learn more about it.","그것에 대해 더 알고 싶어요."]]},{"pattern":"Would you like me to ~?","chunk":"Would you like me to","meaning":"상대방에게 내가 무엇을 해줄지 제안할 때","cue":"Would you like …","guided":"Would you like me to ______?","examples":[["Would you like me to help you?","제가 도와드릴까요?"],["Would you like me to call them?","제가 그쪽에 전화할까요?"],["Would you like me to check the schedule?","제가 일정을 확인할까요?"],["Would you like me to bring you some water?","제가 물 좀 가져다드릴까요?"],["Would you like me to take care of this?","제가 이걸 처리할까요?"]]},{"pattern":"Could you show me how to ~?","chunk":"Could you show me how to","meaning":"방법을 직접 보여 달라고 부탁할 때","cue":"Could you show …","guided":"Could you show me how to ______?","examples":[["Could you show me how to use this?","이거 사용하는 방법을 보여주실 수 있을까요?"],["Could you show me how to open this file?","이 파일 여는 방법을 보여주실 수 있을까요?"],["Could you show me how to do this properly?","이걸 제대로 하는 방법을 보여주실 수 있을까요?"],["Could you show me how to get there?","거기 가는 방법을 알려주실 수 있을까요?"],["Could you show me how to set this up?","이거 설정하는 방법을 보여주실 수 있을까요?"]]},{"pattern":"I'm looking for ~","chunk":"I'm looking for","meaning":"찾고 있는 사람이나 물건, 장소를 말할 때","cue":"I'm looking …","guided":"I'm looking for ______","examples":[["I'm looking for the washroom.","화장실을 찾고 있어요."],["I'm looking for a new apartment.","새 아파트를 찾고 있어요."],["I'm looking for my manager.","제 매니저를 찾고 있어요."],["I'm looking for something cheaper.","좀 더 저렴한 걸 찾고 있어요."],["I'm looking for a place to eat.","먹을 곳을 찾고 있어요."]]},{"pattern":"I'm trying to ~","chunk":"I'm trying to","meaning":"현재 노력하거나 시도하고 있는 일을 말할 때","cue":"I'm trying …","guided":"I'm trying to ______","examples":[["I'm trying to improve my English.","영어를 향상시키려고 노력하고 있어요."],["I'm trying to find the right address.","정확한 주소를 찾으려고 하고 있어요."],["I'm trying to save some money.","돈을 좀 아끼려고 하고 있어요."],["I'm trying to understand how this works.","이게 어떻게 작동하는지 이해하려고 하고 있어요."],["I'm trying to get there before six.","6시 전에 거기 도착하려고 하고 있어요."]]},{"pattern":"I'm supposed to ~","chunk":"I'm supposed to","meaning":"해야 하기로 되어 있거나 예정된 일을 말할 때","cue":"I'm supposed …","guided":"I'm supposed to ______","examples":[["I'm supposed to start at nine.","저는 9시에 시작하기로 되어 있어요."],["I'm supposed to meet her here.","저는 여기서 그녀를 만나기로 되어 있어요."],["I'm supposed to finish this today.","저는 오늘 이걸 끝내야 해요."],["I'm supposed to call him back.","저는 그에게 다시 전화해야 해요."],["I'm supposed to be there by five.","저는 5시까지 거기 있어야 해요."]]},{"pattern":"Could you say ~?","chunk":"Could you say","meaning":"말을 다시 하거나 다른 방식으로 말해 달라고 부탁할 때","cue":"Could you …","guided":"Could you say ______?","examples":[["Could you say that again?","그거 다시 말씀해 주실 수 있을까요?"],["Could you say your name again?","이름을 다시 말씀해 주실 수 있을까요?"],["Could you say that a little louder?","그걸 조금 더 크게 말씀해 주실 수 있을까요?"],["Could you say that more slowly?","그걸 좀 더 천천히 말씀해 주실 수 있을까요?"],["Could you say that in a different way?","그걸 다른 방식으로 말해주실 수 있을까요?"]]},{"pattern":"Could you speak ~?","chunk":"Could you speak","meaning":"말하는 속도, 크기, 언어 등을 조절해 달라고 부탁할 때","cue":"Could you …","guided":"Could you speak ______?","examples":[["Could you speak a little slower?","조금 더 천천히 말씀해 주실 수 있을까요?"],["Could you speak a little louder?","조금 더 크게 말씀해 주실 수 있을까요?"],["Could you speak more clearly?","좀 더 또렷하게 말씀해 주실 수 있을까요?"],["Could you speak in English?","영어로 말씀해 주실 수 있을까요?"],["Could you speak with my manager?","제 매니저와 이야기해 주실 수 있을까요?"]]},{"pattern":"What do you mean by ~?","chunk":"What do you mean by","meaning":"단어나 표현, 상대방의 의도를 정확히 확인할 때","cue":"What do you mean …","guided":"What do you mean by ______?","examples":[["What do you mean by that?","그게 무슨 뜻이에요?"],["What do you mean by 'flexible'?","'flexible'이 무슨 뜻이에요?"],["What do you mean by 'as soon as possible'?","'가능한 한 빨리'라는 게 무슨 뜻이에요?"],["What do you mean by this part?","이 부분이 무슨 뜻이에요?"],["What do you mean by 'available'?","'available'이 무슨 뜻이에요?"]]},{"pattern":"I'm not sure what you mean ~","chunk":"I'm not sure what you mean","meaning":"상대방의 말을 정확히 이해하지 못했음을 부드럽게 말할 때","cue":"I'm not sure …","guided":"I'm not sure what you mean ______","examples":[["I'm not sure what you mean by that.","그게 무슨 뜻인지 잘 모르겠어요."],["I'm not sure what you mean here.","여기서 무슨 뜻인지 잘 모르겠어요."],["I'm not sure what you mean exactly.","정확히 무슨 뜻인지 잘 모르겠어요."],["I'm not sure what you mean when you say 'flexible'.","'flexible'이라고 하실 때 무슨 뜻인지 잘 모르겠어요."],["I'm not sure what you mean about the schedule.","일정에 관해 무슨 뜻인지 잘 모르겠어요."]]},{"pattern":"Just to make sure, ~","chunk":"Just to make sure","meaning":"내가 이해한 내용이 맞는지 다시 확인할 때","cue":"Just to make …","guided":"Just to make sure, ______","examples":[["Just to make sure, we're meeting at three.","확인차 말씀드리면, 우리 3시에 만나는 거죠."],["Just to make sure, I need to bring my ID.","확인차 말씀드리면, 신분증을 가져가야 하는 거죠."],["Just to make sure, this is the right address.","확인차 말씀드리면, 여기가 맞는 주소죠."],["Just to make sure, you're coming tomorrow.","확인차 말씀드리면, 내일 오시는 거죠."],["Just to make sure, the meeting is online.","확인차 말씀드리면, 회의는 온라인으로 하는 거죠."]]},{"pattern":"Make sure to ~","chunk":"Make sure to","meaning":"중요한 행동을 꼭 하라고 알려줄 때","cue":"Make sure …","guided":"Make sure to ______","examples":[["Make sure to lock the door.","문을 꼭 잠그세요."],["Make sure to bring your ID.","신분증을 꼭 가져오세요."],["Make sure to check the time.","시간을 꼭 확인하세요."],["Make sure to save the file.","파일을 꼭 저장하세요."],["Make sure to turn off the lights.","불을 꼭 끄세요."]]},{"pattern":"Don't forget to ~","chunk":"Don't forget to","meaning":"해야 할 일을 잊지 말라고 상기시킬 때","cue":"Don't forget …","guided":"Don't forget to ______","examples":[["Don't forget to call me.","저한테 전화하는 거 잊지 마세요."],["Don't forget to bring your keys.","열쇠 가져오는 거 잊지 마세요."],["Don't forget to send the email.","이메일 보내는 거 잊지 마세요."],["Don't forget to check the schedule.","일정 확인하는 거 잊지 마세요."],["Don't forget to charge your phone.","휴대폰 충전하는 거 잊지 마세요."]]},{"pattern":"Feel free to ~","chunk":"Feel free to","meaning":"부담 없이 무엇을 해도 된다고 말할 때","cue":"Feel free …","guided":"Feel free to ______","examples":[["Feel free to ask questions.","편하게 질문하세요."],["Feel free to call me anytime.","언제든 편하게 전화하세요."],["Feel free to use this chair.","이 의자 편하게 사용하세요."],["Feel free to take some more.","더 가져가셔도 돼요."],["Feel free to let me know if you need help.","도움이 필요하면 편하게 말씀하세요."]]},{"pattern":"There's no need to ~","chunk":"There's no need to","meaning":"무언가를 할 필요가 없다고 안심시킬 때","cue":"There's no need …","guided":"There's no need to ______","examples":[["There's no need to hurry.","서두를 필요 없어요."],["There's no need to apologize.","사과할 필요 없어요."],["There's no need to bring anything.","아무것도 가져올 필요 없어요."],["There's no need to wait for me.","저를 기다릴 필요 없어요."],["There's no need to worry about it.","그것 때문에 걱정할 필요 없어요."]]},{"pattern":"I haven't had a chance to ~","chunk":"I haven't had a chance to","meaning":"아직 어떤 일을 할 시간이 없었다고 말할 때","cue":"I haven't had …","guided":"I haven't had a chance to ______","examples":[["I haven't had a chance to check it yet.","아직 그걸 확인할 시간이 없었어요."],["I haven't had a chance to call her.","아직 그녀에게 전화할 시간이 없었어요."],["I haven't had a chance to read the email.","아직 그 이메일을 읽을 시간이 없었어요."],["I haven't had a chance to finish it.","아직 그걸 끝낼 시간이 없었어요."],["I haven't had a chance to talk to my manager.","아직 매니저와 이야기할 시간이 없었어요."]]},{"pattern":"I'm about to ~","chunk":"I'm about to","meaning":"막 어떤 행동을 시작하려는 순간임을 말할 때","cue":"I'm about …","guided":"I'm about to ______","examples":[["I'm about to leave.","저 이제 막 나가려던 참이에요."],["I'm about to start work.","저 이제 막 일을 시작하려고 해요."],["I'm about to call him.","저 이제 막 그에게 전화하려던 참이에요."],["I'm about to eat lunch.","저 이제 막 점심을 먹으려고 해요."],["I'm about to go to bed.","저 이제 막 자려고 해요."]]},{"pattern":"I used to ~","chunk":"I used to","meaning":"과거에는 자주 했지만 지금은 그렇지 않은 일을 말할 때","cue":"I used …","guided":"I used to ______","examples":[["I used to live downtown.","예전에는 다운타운에 살았어요."],["I used to work nights.","예전에는 야간 근무를 했어요."],["I used to go there every weekend.","예전에는 매주 주말마다 거기 갔어요."],["I used to drink a lot of coffee.","예전에는 커피를 많이 마셨어요."],["I used to take the bus to work.","예전에는 버스를 타고 출근했어요."]]},{"pattern":"I'm used to ~","chunk":"I'm used to","meaning":"어떤 행동이나 환경에 이미 익숙하다고 말할 때","cue":"I'm used …","guided":"I'm used to ______","examples":[["I'm used to waking up early.","저는 일찍 일어나는 데 익숙해요."],["I'm used to working on weekends.","저는 주말에 일하는 데 익숙해요."],["I'm used to taking the subway.","저는 지하철을 타는 데 익숙해요."],["I'm used to cooking for large groups.","저는 많은 사람을 위해 요리하는 데 익숙해요."],["I'm used to busy environments.","저는 바쁜 환경에 익숙해요."]]},{"pattern":"I'm not used to ~","chunk":"I'm not used to","meaning":"어떤 행동이나 환경이 아직 익숙하지 않다고 말할 때","cue":"I'm not used …","guided":"I'm not used to ______","examples":[["I'm not used to waking up this early.","저는 이렇게 일찍 일어나는 게 익숙하지 않아요."],["I'm not used to working this late.","저는 이렇게 늦게 일하는 게 익숙하지 않아요."],["I'm not used to the cold weather.","저는 추운 날씨에 익숙하지 않아요."],["I'm not used to speaking English all day.","저는 하루 종일 영어로 말하는 게 익숙하지 않아요."],["I'm not used to this new system yet.","저는 아직 이 새 시스템에 익숙하지 않아요."]]},{"pattern":"I ended up ~ing","chunk":"I ended up","meaning":"예상과 다르게 결국 어떤 결과가 되었음을 말할 때","cue":"I ended …","guided":"I ended up ______","examples":[["I ended up staying late.","결국 늦게까지 남게 됐어요."],["I ended up taking a taxi.","결국 택시를 타게 됐어요."],["I ended up buying it.","결국 그걸 사게 됐어요."],["I ended up working on Saturday.","결국 토요일에 일하게 됐어요."],["I ended up missing the bus.","결국 버스를 놓쳤어요."]]},{"pattern":"I'm having trouble ~ing","chunk":"I'm having trouble","meaning":"무언가를 하는 데 어려움을 겪고 있다고 말할 때","cue":"I'm having …","guided":"I'm having trouble ______","examples":[["I'm having trouble finding the address.","주소를 찾는 데 어려움을 겪고 있어요."],["I'm having trouble understanding this part.","이 부분을 이해하는 데 어려움이 있어요."],["I'm having trouble opening the file.","파일을 여는 데 문제가 있어요."],["I'm having trouble hearing you.","말씀하시는 게 잘 안 들려요."],["I'm having trouble connecting to the Wi-Fi.","와이파이에 연결하는 데 문제가 있어요."]]},{"pattern":"I might be able to ~","chunk":"I might be able to","meaning":"확실하지는 않지만 가능할 수도 있다고 말할 때","cue":"I might be …","guided":"I might be able to ______","examples":[["I might be able to come tomorrow.","내일 갈 수 있을지도 몰라요."],["I might be able to help after lunch.","점심 후에 도와드릴 수 있을지도 몰라요."],["I might be able to finish it today.","오늘 그걸 끝낼 수 있을지도 몰라요."],["I might be able to switch shifts.","근무를 바꿀 수 있을지도 몰라요."],["I might be able to get there by six.","6시까지 거기 갈 수 있을지도 몰라요."]]},{"pattern":"I won't be able to ~","chunk":"I won't be able to","meaning":"어떤 일을 할 수 없을 것임을 정중하게 알릴 때","cue":"I won't be …","guided":"I won't be able to ______","examples":[["I won't be able to come tomorrow.","내일은 갈 수 없을 것 같아요."],["I won't be able to stay late today.","오늘은 늦게까지 있을 수 없어요."],["I won't be able to finish this by five.","5시까지 이걸 끝낼 수 없을 것 같아요."],["I won't be able to join the meeting.","회의에 참석할 수 없을 것 같아요."],["I won't be able to call you until later.","나중까지는 전화드릴 수 없을 것 같아요."]]},{"pattern":"Are you free ~?","chunk":"Are you free","meaning":"상대방에게 시간이 되는지 물어볼 때","cue":"Are you …","guided":"Are you free ______?","examples":[["Are you free this afternoon?","오늘 오후에 시간 되세요?"],["Are you free tomorrow morning?","내일 아침에 시간 되세요?"],["Are you free after work?","퇴근 후에 시간 되세요?"],["Are you free on Friday?","금요일에 시간 되세요?"],["Are you free for lunch today?","오늘 점심 시간 되세요?"]]},{"pattern":"What time works for you ~?","chunk":"What time works for you","meaning":"상대방에게 편한 시간을 물어볼 때","cue":"What time works …","guided":"What time works for you ______?","examples":[["What time works for you tomorrow?","내일 몇 시가 괜찮으세요?"],["What time works for you on Friday?","금요일 몇 시가 괜찮으세요?"],["What time works for you this week?","이번 주에는 몇 시가 괜찮으세요?"],["What time works for you for the meeting?","회의는 몇 시가 괜찮으세요?"],["What time works for you best?","몇 시가 가장 괜찮으세요?"]]},{"pattern":"I can't make it ~","chunk":"I can't make it","meaning":"약속이나 일정에 참석할 수 없다고 말할 때","cue":"I can't …","guided":"I can't make it ______","examples":[["I can't make it tonight.","오늘 밤에는 못 갈 것 같아요."],["I can't make it on Friday.","금요일에는 참석하기 어려워요."],["I can't make it before six.","6시 전에는 갈 수 없어요."],["I can't make it to the meeting.","회의에 참석할 수 없어요."],["I can't make it this weekend.","이번 주말에는 못 갈 것 같아요."]]},{"pattern":"Why don't we ~?","chunk":"Why don't we","meaning":"함께 할 일을 자연스럽게 제안할 때","cue":"Why don't …","guided":"Why don't we ______?","examples":[["Why don't we go together?","우리 같이 가는 게 어때요?"],["Why don't we meet after work?","퇴근 후에 만나는 게 어때요?"],["Why don't we try this one?","우리 이걸 한번 해보는 게 어때요?"],["Why don't we ask them first?","우리 먼저 그쪽에 물어보는 게 어때요?"],["Why don't we take a short break?","우리 잠깐 쉬는 게 어때요?"]]},{"pattern":"How about ~ing?","chunk":"How about","meaning":"아이디어나 선택지를 가볍게 제안할 때","cue":"How …","guided":"How about ______?","examples":[["How about meeting at three?","3시에 만나는 건 어때요?"],["How about going tomorrow?","내일 가는 건 어때요?"],["How about taking the subway?","지하철 타는 건 어때요?"],["How about trying this one?","이걸 한번 해보는 건 어때요?"],["How about having lunch together?","같이 점심 먹는 건 어때요?"]]},{"pattern":"What if we ~?","chunk":"What if we","meaning":"다른 방법이나 가능성을 제안할 때","cue":"What if …","guided":"What if we ______?","examples":[["What if we go a little earlier?","우리 조금 일찍 가면 어때요?"],["What if we meet tomorrow instead?","대신 내일 만나면 어때요?"],["What if we take a taxi?","우리 택시를 타면 어때요?"],["What if we ask someone else?","우리 다른 사람에게 물어보면 어때요?"],["What if we do it this way?","우리 이 방법으로 하면 어때요?"]]},{"pattern":"It depends on ~","chunk":"It depends on","meaning":"답이나 결과가 어떤 조건에 따라 달라진다고 말할 때","cue":"It depends …","guided":"It depends on ______","examples":[["It depends on the weather.","날씨에 따라 달라요."],["It depends on the schedule.","일정에 따라 달라요."],["It depends on how much it costs.","가격이 얼마인지에 따라 달라요."],["It depends on what time we finish.","우리가 몇 시에 끝나는지에 따라 달라요."],["It depends on the situation.","상황에 따라 달라요."]]},{"pattern":"It looks like ~","chunk":"It looks like","meaning":"보이는 상황을 바탕으로 추측하거나 판단할 때","cue":"It looks …","guided":"It looks like ______","examples":[["It looks like it's going to rain.","비가 올 것 같아요."],["It looks like they're closed.","문을 닫은 것 같아요."],["It looks like we're early.","우리가 일찍 온 것 같아요."],["It looks like the meeting is over.","회의가 끝난 것 같아요."],["It looks like you need some help.","도움이 좀 필요한 것 같아요."]]},{"pattern":"It sounds like ~","chunk":"It sounds like","meaning":"들은 내용을 바탕으로 상황을 판단하거나 반응할 때","cue":"It sounds …","guided":"It sounds like ______","examples":[["It sounds like a good idea.","좋은 생각인 것 같아요."],["It sounds like you're busy.","바쁘신 것 같네요."],["It sounds like they changed the plan.","그쪽에서 계획을 바꾼 것 같네요."],["It sounds like we need more time.","시간이 더 필요한 것 같네요."],["It sounds like everything went well.","모든 일이 잘 된 것 같네요."]]},{"pattern":"As far as I know, ~","chunk":"As far as I know","meaning":"내가 아는 범위 안에서 정보를 조심스럽게 말할 때","cue":"As far as …","guided":"As far as I know, ______","examples":[["As far as I know, the store closes at nine.","제가 알기로는 그 가게는 9시에 닫아요."],["As far as I know, he's working today.","제가 알기로는 그는 오늘 일해요."],["As far as I know, the meeting is still on.","제가 알기로는 회의는 예정대로 진행돼요."],["As far as I know, we don't need a reservation.","제가 알기로는 예약이 필요 없어요."],["As far as I know, nothing has changed.","제가 알기로는 바뀐 게 없어요."]]},{"pattern":"Thanks for ~ing","chunk":"Thanks for","meaning":"상대방이 해준 행동에 자연스럽게 감사할 때","cue":"Thanks …","guided":"Thanks for ______","examples":[["Thanks for helping me.","도와줘서 고마워요."],["Thanks for letting me know.","알려줘서 고마워요."],["Thanks for waiting for me.","기다려줘서 고마워요."],["Thanks for checking that.","그거 확인해줘서 고마워요."],["Thanks for coming today.","오늘 와줘서 고마워요."]]}];
+const el=id=>document.getElementById(id);
+
+let virtualDay=Number(localStorage.getItem('virtualDay')||0);
+let learnedPatterns=JSON.parse(localStorage.getItem('learnedPatterns')||'[]');
+let patternLearnedDay=JSON.parse(localStorage.getItem('patternLearnedDay')||'{}');
+let dailyCompletion=JSON.parse(localStorage.getItem('dailyCompletion')||'{}');
+let activePatternIndex=localStorage.getItem('activePatternIndex');
+activePatternIndex=activePatternIndex===null?null:Number(activePatternIndex);
+let focusState=JSON.parse(localStorage.getItem('focusState')||'null');
+
+let reviewPlans=JSON.parse(localStorage.getItem('reviewPlans')||'{}');
+let reviewState=JSON.parse(localStorage.getItem('reviewState')||'null');
+let reviewDone=JSON.parse(localStorage.getItem('reviewDone')||'{}');
+let reviewMeta=JSON.parse(localStorage.getItem('reviewMeta')||'{}');
+let reviewCompletions=Number(localStorage.getItem('reviewCompletions')||0);
+
+let typingRevealed=false;
+let typingWrongOnce=false;
+
+
+function dayKey(){return `day-${virtualDay}`}
+
+let libraryFilter='all';
+let selectedLibraryPattern=null;
+
+function patternStatus(index){
+  if(learnedPatterns.includes(index)) return 'learned';
+  if(activePatternIndex===index && !isPatternCompletedToday()) return 'today';
+  return 'upcoming';
+}
+function patternStatusLabel(index){
+  const s=patternStatus(index);
+  if(s==='learned') return '학습 완료';
+  if(s==='today') return '오늘';
+  return '예정';
+}
+function patternStatusClass(index){
+  const s=patternStatus(index);
+  if(s==='learned') return 'status-done';
+  if(s==='today') return 'status-today';
+  return 'status-next';
+}
+function setBottomNavActive(tab){
+  el('homeTabBtn').classList.toggle('active',tab==='home');
+  el('libraryTabBtn').classList.toggle('active',tab==='library');
+  el('bottomNav').classList.toggle('hidden',tab==='detail');
+}
+function openHomeTab(){
+  updateHome();
+  setBottomNavActive('home');
+  showScreen('home');
+}
+function openLibraryTab(){
+  renderLibrary();
+  setBottomNavActive('library');
+  showScreen('library');
+}
+function setLibraryFilter(filter){
+  libraryFilter=filter;
+  ['filterAll','filterLearned','filterUpcoming'].forEach(id=>el(id).classList.remove('active'));
+  const map={all:'filterAll',learned:'filterLearned',upcoming:'filterUpcoming'};
+  el(map[filter]).classList.add('active');
+  renderLibrary();
+}
+function libraryMatchesFilter(index){
+  const status=patternStatus(index);
+  if(libraryFilter==='learned') return status==='learned';
+  if(libraryFilter==='upcoming') return status==='today'||status==='upcoming';
+  return true;
+}
+function renderLibrary(){
+  const q=(el('librarySearch').value||'').trim().toLowerCase();
+  const list=el('libraryList');
+  list.innerHTML='';
+  const indices=patterns.map((_,i)=>i).filter(i=>{
+    if(!libraryMatchesFilter(i)) return false;
+    if(!q) return true;
+    const p=patterns[i];
+    return p.pattern.toLowerCase().includes(q) || p.meaning.toLowerCase().includes(q) ||
+      p.examples.some(([en,ko])=>en.toLowerCase().includes(q)||ko.toLowerCase().includes(q));
+  });
+
+  const titles={all:'전체 패턴',learned:'학습 완료',upcoming:'앞으로 학습'};
+  el('librarySummaryTitle').textContent=titles[libraryFilter];
+  el('librarySummaryCount').textContent=`${indices.length}개`;
+  el('libraryCountPill').textContent=`총 ${patterns.length}개`;
+
+  if(!indices.length){
+    const empty=document.createElement('div');
+    empty.className='library-empty';
+    empty.textContent=q?'검색 결과가 없어요.':'아직 표시할 패턴이 없어요.';
+    list.appendChild(empty);
+    return;
+  }
+
+  indices.forEach(i=>{
+    const p=patterns[i];
+    const item=document.createElement('div');
+    item.className='library-item';
+    item.onclick=()=>openPatternDetail(i);
+
+    const top=document.createElement('div');
+    top.className='library-top';
+
+    const left=document.createElement('div');
+    const num=document.createElement('div');
+    num.className='library-num';
+    num.textContent=`PATTERN ${String(i+1).padStart(2,'0')}`;
+    const name=document.createElement('div');
+    name.className='library-pattern';
+    name.textContent=p.pattern;
+    left.appendChild(num);left.appendChild(name);
+
+    const badge=document.createElement('span');
+    badge.className=`status-badge ${patternStatusClass(i)}`;
+    badge.textContent=patternStatusLabel(i);
+
+    top.appendChild(left);top.appendChild(badge);
+
+    const meaning=document.createElement('div');
+    meaning.className='library-meaning';
+    meaning.textContent=p.meaning;
+
+    item.appendChild(top);item.appendChild(meaning);
+    list.appendChild(item);
+  });
+}
+function variablePartForPattern(index){
+  const p=patterns[index];
+  const ex=p.examples[0][0];
+  const parts=splitAroundChunk(ex,p.chunk);
+  const clean=s=>String(s||'').trim().replace(/^[.,?!;:]+|[.,?!;:]+$/g,'').trim();
+  const before=clean(parts.before), after=clean(parts.after);
+  if(before && after) return `${before} … ${after}`;
+  return before||after||'문장에 따라 달라지는 부분';
+}
+function openPatternDetail(index){
+  if(!patterns[index]) return;
+  selectedLibraryPattern=index;
+  const p=patterns[index];
+  const status=patternStatus(index);
+
+  el('detailPattern').textContent=p.pattern;
+  el('detailMeaning').textContent=p.meaning;
+  el('detailChunk').textContent=p.chunk;
+  el('detailVariable').textContent=variablePartForPattern(index);
+  el('detailStatusText').textContent=`Pattern ${index+1} / ${patterns.length}`;
+
+  const badge=el('detailStatusBadge');
+  badge.className=`status-badge ${patternStatusClass(index)}`;
+  badge.textContent=patternStatusLabel(index);
+
+  const box=el('detailExamples');
+  box.innerHTML='';
+  p.examples.forEach(([en,ko])=>{
+    const item=document.createElement('div');
+    item.className='example-item';
+    const enEl=document.createElement('div');
+    enEl.className='example-en';
+    enEl.innerHTML=highlightSentence(en,p.chunk);
+    const koEl=document.createElement('div');
+    koEl.className='example-ko';
+    koEl.textContent=ko;
+    item.appendChild(enEl);item.appendChild(koEl);
+    box.appendChild(item);
+  });
+
+  setBottomNavActive('detail');
+  showScreen('patternDetail');
+}
+function backToLibrary(){
+  renderLibrary();
+  setBottomNavActive('library');
+  showScreen('library');
+}
+
+function saveCore(){
+  localStorage.setItem('virtualDay',String(virtualDay));
+  localStorage.setItem('learnedPatterns',JSON.stringify(learnedPatterns));
+  localStorage.setItem('patternLearnedDay',JSON.stringify(patternLearnedDay));
+  localStorage.setItem('dailyCompletion',JSON.stringify(dailyCompletion));
+  if(activePatternIndex===null) localStorage.removeItem('activePatternIndex');
+  else localStorage.setItem('activePatternIndex',String(activePatternIndex));
+  if(focusState) localStorage.setItem('focusState',JSON.stringify(focusState));
+  else localStorage.removeItem('focusState');
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  el(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function escapeHTML(text=''){
+  return String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+function highlightSentence(text,chunk){
+  const lower=String(text).toLowerCase(), target=String(chunk).toLowerCase();
+  const pos=lower.indexOf(target);
+  if(pos<0) return escapeHTML(text);
+  return escapeHTML(text.slice(0,pos))+'<span class="pattern-highlight">'+escapeHTML(text.slice(pos,pos+chunk.length))+'</span>'+escapeHTML(text.slice(pos+chunk.length));
+}
+function normalizeAnswer(text=''){
+  return String(text).toLowerCase()
+    .replace(/[’‘`]/g,"'")
+    .replace(/['"]/g,'')
+    .replace(/[.?!,;:]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function splitAroundChunk(sentence,chunk){
+  const pos=sentence.toLowerCase().indexOf(chunk.toLowerCase());
+  if(pos<0) return {before:'',after:sentence};
+  return {before:sentence.slice(0,pos),after:sentence.slice(pos+chunk.length)};
+}
+function isPatternCompletedToday(){return dailyCompletion[dayKey()]!==undefined}
+function ensureActivePattern(){
+  if(isPatternCompletedToday()) return null;
+  if(activePatternIndex!==null && !learnedPatterns.includes(activePatternIndex)) return activePatternIndex;
+  const next=patterns.findIndex((_,i)=>!learnedPatterns.includes(i));
+  if(next<0){activePatternIndex=null;saveCore();return null}
+  activePatternIndex=next;
+  saveCore();
+  return next;
+}
+function defaultFocusState(patternIndex){
+  return {patternIndex,phase:'initial',initialStep:0,retryQueue:[]};
+}
+function currentFocusTask(){
+  if(!focusState) return 0;
+  return focusState.phase==='initial' ? focusState.initialStep : (focusState.retryQueue[0]??1);
+}
+function focusProgressCount(){
+  if(!focusState) return 0;
+  if(focusState.phase==='initial') return Math.min(focusState.initialStep,5);
+  return 5;
+}
+
+function updateHome(){
+  el('dayLabel').textContent=`Day ${virtualDay+1}`;
+  el('patternsStat').textContent=learnedPatterns.length;
+  el('sentencesStat').textContent=learnedPatterns.length*5;
+  el('reviewsStat').textContent=reviewCompletions;
+
+  const todayDone=dailyCompletion[dayKey()];
+  const idx=ensureActivePattern();
+  const btn=el('startFocusBtn');
+
+  if(todayDone!==undefined){
+    const p=patterns[todayDone];
+    el('patternStatus').textContent='오늘 완료 ✓';
+    el('homePatternName').textContent=p.pattern;
+    el('homePatternMeaning').textContent=p.meaning;
+    el('focusProgressText').textContent='오늘의 집중 학습 완료';
+    el('focusMiniStatus').textContent='5 / 5';
+    btn.textContent='오늘 학습 완료 ✓';
+    btn.disabled=true;btn.style.opacity=.55;
+  }else if(idx!==null){
+    const p=patterns[idx];
+    el('patternStatus').textContent=focusState && focusState.patternIndex===idx ? '이어 학습' : '오늘 학습';
+    el('homePatternName').textContent=p.pattern;
+    el('homePatternMeaning').textContent=p.meaning;
+    if(focusState && focusState.patternIndex===idx){
+      if(focusState.phase==='retry'){
+        el('focusProgressText').textContent='빠른 재연습 중';
+        el('focusMiniStatus').textContent=`${focusState.retryQueue.length}개 남음`;
+      }else{
+        el('focusProgressText').textContent='5문장 집중 학습';
+        el('focusMiniStatus').textContent=`${focusState.initialStep} / 5`;
+      }
+      btn.textContent='이어 학습';
+    }else{
+      el('focusProgressText').textContent='5문장 집중 학습';
+      el('focusMiniStatus').textContent='0 / 5';
+      btn.textContent='오늘 학습 시작';
+    }
+    btn.disabled=false;btn.style.opacity=1;
+  }else{
+    el('patternStatus').textContent='전체 완료';
+    el('homePatternName').textContent='프로토타입의 모든 패턴을 학습했어요.';
+    el('homePatternMeaning').textContent='새 패턴은 더 이상 없지만 이전 패턴 복습은 계속할 수 있어요.';
+    el('focusProgressText').textContent=`${patterns.length}개 패턴 완료`;
+    el('focusMiniStatus').textContent='';
+    btn.textContent='새 패턴 학습 완료 ✓';
+    btn.disabled=true;btn.style.opacity=.55;
+  }
+
+  const remaining=getReviewRemainingCount();
+  el('reviewDueCount').textContent=remaining;
+  el('startReviewBtn').disabled=remaining===0;
+  el('startReviewBtn').style.opacity=remaining===0?.5:1;
+  el('startReviewBtn').textContent=remaining===0?'오늘 복습 없음':'복습 시작';
+}
+function goHome(){saveCore();updateHome();setBottomNavActive('home');showScreen('home')}
+
+function startFocusLearning(){
+  const idx=ensureActivePattern();
+  if(idx===null){updateHome();return}
+  if(!focusState || focusState.patternIndex!==idx) focusState=defaultFocusState(idx);
+  saveCore();
+  renderFocusTask();
+  setBottomNavActive('detail');
+  showScreen('learn');
+}
+function renderFocusTask(){
+  if(!focusState){goHome();return}
+  const p=patterns[focusState.patternIndex];
+  const task=currentFocusTask();
+  const retry=focusState.phase==='retry';
+
+  el('learnHeadTitle').textContent=p.pattern;
+  el('learnHeadSub').textContent=retry?`빠른 재연습 · ${focusState.retryQueue.length}개 남음`:`문장 ${task+1} / 5`;
+  el('learnProgress').style.width=retry?'100%':`${(task+1)/5*100}%`;
+
+  el('studyTask').classList.add('hidden');
+  el('typingTask').classList.add('hidden');
+  el('recallTask').classList.add('hidden');
+
+  typingRevealed=false;typingWrongOnce=false;
+
+  if(task===0){
+    el('studyTask').classList.remove('hidden');
+    el('studySentence').innerHTML=highlightSentence(p.examples[0][0],p.chunk);
+    el('studyKo').textContent=p.examples[0][1];
+    el('studyPattern').textContent=p.pattern;
+    const studyParts=splitAroundChunk(p.examples[0][0],p.chunk);
+    el('studyFixedPart').textContent=p.chunk;
+    const cleanPart=s=>String(s||'').trim().replace(/^[.,?!;:]+|[.,?!;:]+$/g,'').trim();
+    const beforeChange=cleanPart(studyParts.before);
+    const afterChange=cleanPart(studyParts.after);
+    const changing=beforeChange && afterChange ? `${beforeChange} … ${afterChange}` : (beforeChange||afterChange);
+    el('studyChangePart').textContent=changing || '문장에 따라 달라지는 부분';
+    return;
+  }
+  if(task===1){
+    el('typingTask').classList.remove('hidden');
+    el('typingStage').textContent=retry?'↻ 재연습 · 패턴 직접 쓰기':'2/5 · 패턴 직접 쓰기';
+    const ex=p.examples[1], parts=splitAroundChunk(ex[0],p.chunk);
+    el('typingKo').textContent=ex[1];
+    el('typingBefore').textContent=parts.before;
+    el('typingAfter').textContent=parts.after;
+    el('patternInput').value='';
+    el('typingFeedback').textContent='';el('typingFeedback').className='feedback';
+    el('typingRevealBtn').classList.add('hidden');
+    el('typingNextBtn').classList.add('hidden');
+    el('typingCheckBtn').classList.remove('hidden');
+    setTimeout(()=>{try{el('patternInput').focus()}catch(e){}},0);
+    return;
+  }
+
+  el('recallTask').classList.remove('hidden');
+  el('retryBanner').classList.toggle('hidden',!retry);
+  const labels={2:'3/5 · 패턴으로 만들기',3:'4/5 · 힌트 줄이기',4:'5/5 · 통문장 회상'};
+  el('recallStage').textContent=retry?'재연습 · 다시 꺼내기':labels[task];
+  const ex=p.examples[task];
+  el('focusKo').textContent=ex[1];
+  el('focusAnswer').innerHTML=highlightSentence(ex[0],p.chunk);
+  el('focusFlipCard').classList.remove('flipped');
+  el('focusAnswerBtn').textContent='정답 보기';
+  el('focusRating').classList.add('hidden');
+  if(task===2){
+    el('focusCue').textContent=p.guided;
+    el('focusCue').classList.remove('hidden');
+  }else if(task===3){
+    el('focusCue').textContent=`시작 힌트: ${p.cue}`;
+    el('focusCue').classList.remove('hidden');
+  }else{
+    el('focusCue').classList.add('hidden');
+  }
+}
+function speakFocusExample(i){const p=patterns[focusState?.patternIndex];if(p)speakText(p.examples[i][0])}
+function toggleFocusAnswer(){
+  const card=el('focusFlipCard');
+  const shown=card.classList.contains('flipped');
+  if(shown){card.classList.remove('flipped');el('focusAnswerBtn').textContent='정답 보기'}
+  else{card.classList.add('flipped');el('focusAnswerBtn').textContent='다시 가리기';el('focusRating').classList.remove('hidden')}
+}
+function checkPatternTyping(){
+  const p=patterns[focusState.patternIndex];
+  const given=normalizeAnswer(el('patternInput').value);
+  const correct=normalizeAnswer(p.chunk);
+  if(given===correct){
+    typingRevealed=false;
+    el('typingFeedback').textContent='✓ 맞았어요. 패턴을 직접 꺼냈어요.';
+    el('typingFeedback').className='feedback good';
+    el('typingCheckBtn').classList.add('hidden');
+    el('typingRevealBtn').classList.add('hidden');
+    el('typingNextBtn').classList.remove('hidden');
+  }else{
+    typingWrongOnce=true;
+    el('typingFeedback').textContent='한 번 더 생각해보세요. 대소문자와 작은 문장부호는 중요하지 않아요.';
+    el('typingFeedback').className='feedback bad';
+    el('typingRevealBtn').classList.remove('hidden');
+  }
+}
+function revealPatternTyping(){
+  const p=patterns[focusState.patternIndex];
+  typingRevealed=true;
+  el('typingFeedback').innerHTML=`고정 부분 정답: <span class="pattern-highlight">${escapeHTML(p.chunk)}</span>`;
+  el('typingFeedback').className='feedback bad';
+  el('typingCheckBtn').classList.add('hidden');
+  el('typingRevealBtn').classList.add('hidden');
+  el('typingNextBtn').classList.remove('hidden');
+}
+function finishTypingTask(){finishCurrentTask(!typingRevealed)}
+function rateFocus(success){finishCurrentTask(!!success)}
+function finishCurrentTask(success){
+  if(!focusState)return;
+  const task=currentFocusTask();
+  if(focusState.phase==='initial'){
+    if(!success && task>0 && !focusState.retryQueue.includes(task)) focusState.retryQueue.push(task);
+    if(focusState.initialStep<4){
+      focusState.initialStep++;
+      saveCore();renderFocusTask();return;
+    }
+    if(focusState.retryQueue.length){
+      focusState.phase='retry';
+      saveCore();renderFocusTask();return;
+    }
+    completeFocusPattern();return;
+  }
+
+  const current=focusState.retryQueue.shift();
+  if(!success) focusState.retryQueue.push(current);
+  if(focusState.retryQueue.length){
+    saveCore();renderFocusTask();
+  }else completeFocusPattern();
+}
+function completeFocusPattern(){
+  const idx=focusState.patternIndex;
+  if(!learnedPatterns.includes(idx)) learnedPatterns.push(idx);
+  learnedPatterns.sort((a,b)=>a-b);
+  patternLearnedDay[String(idx)]=virtualDay;
+  dailyCompletion[dayKey()]=idx;
+  activePatternIndex=null;
+  focusState=null;
+  saveCore();
+  el('completePattern').textContent=patterns[idx].pattern;
+  updateHome();
+  setBottomNavActive('detail');
+  showScreen('complete');
+}
+
+function reviewEligiblePatterns(){
+  return learnedPatterns.filter(i=>Number(patternLearnedDay[String(i)])<virtualDay);
+}
+function chooseUniqueExample(patternIndex,used,seed){
+  for(let k=0;k<5;k++){
+    const e=(seed+k)%5, key=`${patternIndex}-${e}`;
+    if(!used.has(key)){used.add(key);return {p:patternIndex,e}}
+  }
+  return null;
+}
+function buildReviewPlan(){
+  const eligible=reviewEligiblePatterns();
+  if(!eligible.length) return [];
+  const used=new Set(), out=[];
+  const yesterday=eligible.filter(i=>Number(patternLearnedDay[String(i)])===virtualDay-1);
+  const older=eligible.filter(i=>Number(patternLearnedDay[String(i)])<virtualDay-1);
+
+  if(yesterday.length){
+    const y=yesterday[0];
+    for(let n=0;n<2;n++){
+      const item=chooseUniqueExample(y,used,(virtualDay+n)%5); if(item)out.push(item);
+    }
+  }
+
+  let candidates=(older.length?older:eligible).slice().sort((a,b)=>{
+    const ma=reviewMeta[String(a)]?.lastReviewedDay ?? -9999;
+    const mb=reviewMeta[String(b)]?.lastReviewedDay ?? -9999;
+    if(ma!==mb)return ma-mb;
+    return Number(patternLearnedDay[String(a)])-Number(patternLearnedDay[String(b)]);
+  });
+  let pass=0;
+  while(out.length<5 && candidates.length && pass<30){
+    const p=candidates[pass%candidates.length];
+    const item=chooseUniqueExample(p,used,(virtualDay+pass+p)%5);
+    if(item)out.push(item);
+    pass++;
+    if(out.length<5 && pass>=candidates.length*5)break;
+  }
+  // If multiple pools were exhausted, fill from any eligible pattern.
+  let fill=0;
+  while(out.length<5 && fill<50){
+    const p=eligible[fill%eligible.length];
+    const item=chooseUniqueExample(p,used,(virtualDay+fill*2+p)%5);
+    if(item)out.push(item);
+    fill++;
+  }
+  return out.slice(0,5);
+}
+function getOrCreateReviewPlan(){
+  const key=dayKey();
+  if(!Array.isArray(reviewPlans[key])){
+    reviewPlans[key]=buildReviewPlan();
+    localStorage.setItem('reviewPlans',JSON.stringify(reviewPlans));
+  }
+  return reviewPlans[key];
+}
+function getReviewRemainingCount(){
+  if(reviewDone[dayKey()])return 0;
+  if(reviewState && reviewState.day===virtualDay && Array.isArray(reviewState.remaining)) return reviewState.remaining.length;
+  return getOrCreateReviewPlan().length;
+}
+function startReview(){
+  if(reviewDone[dayKey()]){updateHome();return}
+  const plan=getOrCreateReviewPlan();
+  if(!plan.length){updateHome();return}
+  if(!reviewState || reviewState.day!==virtualDay || !Array.isArray(reviewState.remaining) || !reviewState.remaining.length){
+    reviewState={day:virtualDay,remaining:plan.map(x=>({p:x.p,e:x.e})),completed:0,touched:[]};
+  }
+  localStorage.setItem('reviewState',JSON.stringify(reviewState));
+  renderReview();
+  setBottomNavActive('detail');
+  showScreen('review');
+}
+function renderReview(){
+  if(!reviewState || !reviewState.remaining.length){finishReviewSession();return}
+  const item=reviewState.remaining[0], p=patterns[item.p], ex=p.examples[item.e];
+  const total=reviewState.completed+reviewState.remaining.length;
+  el('reviewHeadSub').textContent=`완료 ${reviewState.completed} · 남음 ${reviewState.remaining.length}`;
+  el('reviewProgress').style.width=`${total?reviewState.completed/total*100:100}%`;
+  el('reviewPatternHint').textContent='어떤 패턴이 자연스러운지 먼저 스스로 떠올려보세요.';
+  el('reviewKo').textContent=ex[1];
+  el('reviewAnswer').innerHTML=highlightSentence(ex[0],p.chunk);
+  el('reviewFlipCard').classList.remove('flipped');
+  el('reviewAnswerBtn').textContent='정답 보기';
+  el('reviewRating').classList.add('hidden');
+}
+function toggleReviewAnswer(){
+  const card=el('reviewFlipCard'), shown=card.classList.contains('flipped');
+  if(shown){card.classList.remove('flipped');el('reviewAnswerBtn').textContent='정답 보기'}
+  else{card.classList.add('flipped');el('reviewAnswerBtn').textContent='다시 가리기';el('reviewRating').classList.remove('hidden')}
+}
+function rateReview(success){
+  if(!reviewState || !reviewState.remaining.length)return;
+  const item=reviewState.remaining.shift();
+  if(!reviewState.touched.includes(item.p))reviewState.touched.push(item.p);
+  if(success)reviewState.completed++;
+  else reviewState.remaining.push(item);
+  localStorage.setItem('reviewState',JSON.stringify(reviewState));
+  if(reviewState.remaining.length)renderReview();
+  else finishReviewSession();
+}
+function finishReviewSession(){
+  if(!reviewState)return;
+  reviewState.touched.forEach(p=>{
+    const k=String(p), old=reviewMeta[k]||{timesReviewed:0,lastReviewedDay:-9999};
+    reviewMeta[k]={timesReviewed:Number(old.timesReviewed||0)+1,lastReviewedDay:virtualDay};
+  });
+  reviewDone[dayKey()]=true;
+  reviewCompletions++;
+  localStorage.setItem('reviewMeta',JSON.stringify(reviewMeta));
+  localStorage.setItem('reviewDone',JSON.stringify(reviewDone));
+  localStorage.setItem('reviewCompletions',String(reviewCompletions));
+  reviewState=null;localStorage.removeItem('reviewState');
+  updateHome();setBottomNavActive('home');showScreen('home');alert('오늘 복습을 마쳤어요! ✅');
+}
+
+function advanceTestDay(){
+  virtualDay++;
+  reviewState=null;localStorage.removeItem('reviewState');
+  saveCore();
+  updateHome();
+}
+
+function chooseAutomaticEnglishVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const voices=speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+  const english=voices.filter(v=>(v.lang||'').toLowerCase().startsWith('en'));
+  if(!english.length) return null;
+
+  // Prefer an installed Google English voice when the device exposes one.
+  const google=english.find(v=>/google/i.test(v.name||''));
+  if(google) return google;
+
+  // Otherwise prefer North American English, then any available English voice.
+  return english.find(v=>(v.lang||'').toLowerCase()==='en-us')
+      || english.find(v=>(v.lang||'').toLowerCase()==='en-ca')
+      || english[0];
+}
+function speakText(text){
+  if(!('speechSynthesis' in window)||!text)return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  const v=chooseAutomaticEnglishVoice();
+  if(v){u.voice=v;u.lang=v.lang||'en-US'}
+  else u.lang='en-US';
+  u.rate=.9;
+  speechSynthesis.speak(u);
+}
+
+if('speechSynthesis' in window && 'onvoiceschanged' in speechSynthesis){
+  speechSynthesis.onvoiceschanged=()=>{};
+}
+updateHome();
+setBottomNavActive('home');
+</script>
+</body>
+</html>
